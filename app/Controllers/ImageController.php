@@ -34,4 +34,18 @@ class ImageController extends BaseController
             "message" => "Record added successfully"
         ]);
     }
+
+    public function update($id)
+    {
+        $name = $this->request->getVar('name');
+        $author = $this->request->getVar('author');
+        $data = [
+            "name" => $name,
+            "author" => $author,
+        ];
+        $this->imageModel->update($id, $data);
+        return $this->response->setJSON([
+            "message" => "Record updated successfully"
+        ]);
+    }
 }
