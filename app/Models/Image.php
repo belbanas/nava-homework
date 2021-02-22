@@ -19,8 +19,8 @@ class Image extends Model
     protected $allowedFields = ['name', 'author'];
 
     protected $useTimestamps = true;
-    protected $createdField  = '';
-    protected $updatedField  = '';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
 
     protected $validationRules    = [];
