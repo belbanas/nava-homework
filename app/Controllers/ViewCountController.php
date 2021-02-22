@@ -24,7 +24,7 @@ class ViewCountController extends BaseController
         try {
             $views = $this->viewCountModel->where('image_id', $id)->first();
             return $this->response->setJSON([
-                "message" => $views
+                "message" => $views->view_count
             ])->setStatusCode(200);
         } catch (Exception $e) {
             return $this->response->setJSON([
