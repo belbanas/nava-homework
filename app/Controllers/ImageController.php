@@ -22,4 +22,16 @@ class ImageController extends BaseController
             "result" => $images
         ]);
     }
+
+    public function create()
+    {
+        $data = [
+            "name" => $this->request->getVar('name'),
+            "author" => $this->request->getVar('author'),
+        ];
+        $this->imageModel->insert($data);
+        return $this->response->setJSON([
+            "message" => "Record added successfully"
+        ]);
+    }
 }
