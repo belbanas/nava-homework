@@ -38,6 +38,7 @@ $routes->post('/images', 'ImageController::create');
 $routes->put('/images/(:num)', 'ImageController::update/$1');
 $routes->delete('/images/(:num)', 'ImageController::delete/$1');
 $routes->get('/images/(:num)/count', 'ViewCountController::index/$1');
+$routes->post('/images/(:num)/count', 'ViewCountController::incrementCounter/$1');
 
 /*
  * --------------------------------------------------------------------
