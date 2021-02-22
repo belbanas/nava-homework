@@ -11,7 +11,7 @@ class Image extends Model
     protected $table      = 'images';
     protected $primaryKey = 'id';
 
-    protected $useAutoIncrement = false;
+    protected $useAutoIncrement = true;
 
     protected $returnType     = 'object';
     protected $useSoftDeletes = true;
