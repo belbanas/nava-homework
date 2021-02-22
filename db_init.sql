@@ -14,5 +14,8 @@ CREATE TABLE views (
                        id SERIAL PRIMARY KEY UNIQUE,
                        image_id BIGINT UNSIGNED NOT NULL,
                        view_count INT,
-                       FOREIGN KEY(image_id) REFERENCES images(id)
+                       created_at DATETIME,
+                       updated_at DATETIME,
+                       deleted_at DATETIME,
+                       CONSTRAINT fk_image_id FOREIGN KEY(image_id) REFERENCES images(id)
 );
