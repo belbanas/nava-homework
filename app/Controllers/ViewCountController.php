@@ -24,11 +24,30 @@ class ViewCountController extends BaseController
         try {
             $views = $this->viewCountModel->where('image_id', $id)->first();
             return $this->response->setJSON([
-                "message" => $views->view_count
+                "message" => $views
             ])->setStatusCode(200);
         } catch (Exception $e) {
             return $this->response->setJSON([
                 "Error" => $e->getMessage()])->setStatusCode(400);
+        }
+    }
+
+    public function incrementCounter($id)
+    {
+        $views = $this->viewCountModel->where('image_id', $id)->first();
+        if ($views === null) {
+            $this->viewCountModel->insert([
+                "image_id" => $id,
+                "view_count" => 1
+            ]);
+            return $this->response->setJSON([
+                "message" => "Record updated successfully",
+            ]);
+        } else {
+            $this->viewCountModel->where('image_id', $id)->increment('view_count');
+            return $this->response->setJSON([
+                "message" => "Record created successfully",
+            ]);
         }
     }
 }
