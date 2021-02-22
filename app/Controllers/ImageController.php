@@ -20,7 +20,7 @@ class ImageController extends BaseController
         $images = $this->imageModel->findAll();
         return $this->response->setJSON([
             "result" => $images
-        ]);
+        ])->setStatusCode(200);
     }
 
     public function create()
@@ -32,7 +32,7 @@ class ImageController extends BaseController
         $this->imageModel->insert($data);
         return $this->response->setJSON([
             "message" => "Record added successfully"
-        ]);
+        ])->setStatusCode(201);
     }
 
     public function update($id)
@@ -46,6 +46,14 @@ class ImageController extends BaseController
         $this->imageModel->update($id, $data);
         return $this->response->setJSON([
             "message" => "Record updated successfully"
-        ]);
+        ])->setStatusCode(200);
+    }
+
+    public function delete($id)
+    {
+        $this->imageModel->delete($id);
+        return $this->response->setJSON([
+            "message" => "Record deleted successfully"
+        ])->setStatusCode(200);
     }
 }
