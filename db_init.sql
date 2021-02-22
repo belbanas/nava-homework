@@ -5,8 +5,8 @@ CREATE TABLE images (
                         id BIGINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT UNIQUE,
                         name VARCHAR(255) NOT NULL,
                         author VARCHAR(255) NOT NULL,
-                        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                        updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
+                        created_at DATETIME,
+                        updated_at DATETIME,
                         deleted_at DATETIME
 );
 
