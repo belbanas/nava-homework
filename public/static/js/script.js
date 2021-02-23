@@ -23,6 +23,16 @@ const DOM = {
                             HTML += `<td>${image.author}</td>`
                             HTML += `<td>${image.name}</td>`
                             HTML += `<td>${viewCount}</td>`
+                            HTML += `<td><span class="dropdown">
+                                    <span class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Menü
+                                    </span>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <li><a class="dropdown-item" href="#">Módosítás</a></li>
+                                        <li><a class="dropdown-item" href="#">Törlés</a></li>
+                                        <li><a class="dropdown-item" href="#">Megtekintés</a></li>
+                                    </ul>
+                                    </span></td>`
                             HTML += `</tr>`
                             tableBody.innerHTML += HTML;
                         })
