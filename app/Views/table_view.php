@@ -47,8 +47,8 @@
                 <input class="form-control" type="text" name="name" id="name">
             </div>
         </div>
-        <button class="btn btn-primary" id="submit-btn">Submit</button>
-        <button class="btn btn-primary" id="update-btn">Update</button>
+        <button class="btn btn-primary" id="submit-btn">Hozzáad</button>
+        <button class="btn btn-primary" id="update-btn">Módosít</button>
 <!--    </form>-->
 </div>
 </body>

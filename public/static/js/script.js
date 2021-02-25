@@ -5,6 +5,7 @@ const DOM = {
         DOM.updateBtnHandler();
     },
     fillTable: () => {
+        DOM.imageIdToUpdate = null;
         fetch('/images')
             .then(response => response.json())
             .then(json_response => {
@@ -96,19 +97,23 @@ const DOM = {
     updateBtnHandler: () => {
         let updateBtn = document.querySelector('#update-btn');
         updateBtn.addEventListener("click", () => {
-            let name = document.getElementById("name").value;
-            let author = document.getElementById("author").value;
-            fetch('/images/' + DOM.imageIdToUpdate, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    name: name,
-                    author: author
+            if (DOM.imageIdToUpdate === null) {
+                alert('Nincs mit módosítani')
+            } else {
+                let name = document.getElementById("name").value;
+                let author = document.getElementById("author").value;
+                fetch('/images/' + DOM.imageIdToUpdate, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        name: name,
+                        author: author
+                    })
                 })
-            })
-                .then(response => response.json())
-                .then(json => console.log(json))
-                .then(DOM.fillTable)
+                    .then(response => response.json())
+                    .then(json => console.log(json))
+                    .then(DOM.fillTable)
+            }
         })
     }
 }
