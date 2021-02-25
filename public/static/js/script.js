@@ -30,7 +30,7 @@ const DOM = {
                                         Menü
                                     </span>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <li><a class="dropdown-item" href="#">Módosítás</a></li>
+                                        <li><span class="dropdown-item edit-btn" data-id="${image.id}" data-name="${image.name}" data-author="${image.author}">Módosítás</span></li>
                                         <li><span class="dropdown-item del-btn" data-id="${image.id}">Törlés</span></li>
                                         <li><a class="dropdown-item" href="/images/${image.id}">Megtekintés</a></li>
                                     </ul>
@@ -39,6 +39,7 @@ const DOM = {
                             tableBody.innerHTML += HTML;
                         })
                         .then(DOM.deleteBtnHandler)
+                        .then(DOM.editBtnHandler)
                 }
             })
     },
@@ -77,6 +78,18 @@ const DOM = {
                     DOM.fillTable();
                 })
         });
+    },
+    editBtnHandler: () => {
+        let editBtns = document.querySelectorAll(".edit-btn");
+        for (let editBtn of editBtns) {
+            editBtn.addEventListener("click", () => {
+                console.log("hello!");
+                let nameContainer = document.querySelector('#name');
+                let authorContainer = document.querySelector('#author');
+                nameContainer.value = editBtn.dataset.name;
+                authorContainer.value = editBtn.dataset.author;
+            })
+        }
     }
 }
 
