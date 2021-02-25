@@ -78,6 +78,6 @@ class ImageController extends BaseController
     public function view($id)
     {
         $response = (new ViewCountController)->incrementCounter($id);
-        return $this->response->setJSON($response);
+        return view('image_view', ["id" => $id]);
     }
 }
