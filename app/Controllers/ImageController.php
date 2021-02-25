@@ -4,6 +4,8 @@
 namespace App\Controllers;
 
 
+use Exception;
+
 class ImageController extends BaseController
 {
     protected $db;
@@ -34,7 +36,7 @@ class ImageController extends BaseController
             return $this->response->setJSON([
                 "message" => "Record added successfully"
             ])->setStatusCode(201);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->response->setJSON([
                 "Error" => $e->getMessage()
             ]);
@@ -52,7 +54,7 @@ class ImageController extends BaseController
             return $this->response->setJSON([
                 "message" => "Record updated successfully"
             ])->setStatusCode(200);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->response->setJSON([
                 "Error" => $e->getMessage()
             ]);
@@ -66,10 +68,16 @@ class ImageController extends BaseController
             return $this->response->setJSON([
                 "message" => "Record deleted successfully"
             ])->setStatusCode(200);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->response->setJSON([
                 "Error" => $e->getMessage()
             ]);
         }
+    }
+
+    public function view($id)
+    {
+        $response = (new ViewCountController)->incrementCounter($id);
+        return $this->response->setJSON($response);
     }
 }
