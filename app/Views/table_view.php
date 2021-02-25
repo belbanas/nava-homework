@@ -48,6 +48,7 @@
             </div>
         </div>
         <button class="btn btn-primary" id="submit-btn">Submit</button>
+        <button class="btn btn-primary" id="update-btn">Update</button>
 <!--    </form>-->
 </div>
 </body>

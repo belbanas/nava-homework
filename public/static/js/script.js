@@ -2,6 +2,7 @@ const DOM = {
     init: () => {
         DOM.fillTable();
         DOM.submitBtnHandler();
+        DOM.updateBtnHandler();
     },
     fillTable: () => {
         fetch('/images')
@@ -57,6 +58,7 @@ const DOM = {
             })
         }
     },
+    imageIdToUpdate: null,
     submitBtnHandler: () => {
         let submitBtn = document.getElementById("submit-btn");
         submitBtn.addEventListener('click', () => {
@@ -83,13 +85,31 @@ const DOM = {
         let editBtns = document.querySelectorAll(".edit-btn");
         for (let editBtn of editBtns) {
             editBtn.addEventListener("click", () => {
-                console.log("hello!");
                 let nameContainer = document.querySelector('#name');
                 let authorContainer = document.querySelector('#author');
                 nameContainer.value = editBtn.dataset.name;
                 authorContainer.value = editBtn.dataset.author;
+                DOM.imageIdToUpdate = editBtn.dataset.id;
             })
         }
+    },
+    updateBtnHandler: () => {
+        let updateBtn = document.querySelector('#update-btn');
+        updateBtn.addEventListener("click", () => {
+            let name = document.getElementById("name").value;
+            let author = document.getElementById("author").value;
+            fetch('/images/' + DOM.imageIdToUpdate, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    name: name,
+                    author: author
+                })
+            })
+                .then(response => response.json())
+                .then(json => console.log(json))
+                .then(DOM.fillTable)
+        })
     }
 }
 
