@@ -30,7 +30,7 @@ class ViewCountController extends BaseController
             // If something went wrong set the counts to zero.//
             return $this->response->setJSON([
                 "Error" => $e->getMessage(),
-                "view_count" => 0])->setStatusCode(400);
+                "view_count" => 0]);
         }
     }
 
@@ -38,18 +38,21 @@ class ViewCountController extends BaseController
     {
         $views = $this->viewCountModel->where('image_id', $id)->first();
         if ($views === null) {
-            $this->viewCountModel->insert([
-                "image_id" => $id,
-                "view_count" => 1
-            ]);
-            return $this->response->setJSON([
-                "message" => "Record updated successfully",
-            ]);
+            try {
+                $this->viewCountModel->insert([
+                    "image_id" => $id,
+                    "view_count" => 1
+                ]);
+            } catch (Exception $e) {
+                return $e->getMessage();
+            }
         } else {
-            $this->viewCountModel->where('image_id', $id)->increment('view_count');
-            return $this->response->setJSON([
-                "message" => "Record created successfully",
-            ]);
+            try {
+                $this->viewCountModel->where('image_id', $id)->increment('view_count');
+            } catch (Exception $e) {
+                return $e->getMessage();
+            }
         }
+        return null;
     }
 }
