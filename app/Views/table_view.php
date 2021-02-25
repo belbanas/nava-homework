@@ -24,31 +24,30 @@
         <thead>
         <tr>
             <th scope="col">Id</th>
-            <th scope="col">Név</th>
             <th scope="col">Készítette</th>
+            <th scope="col">Név</th>
             <th scope="col">Megtekintve</th>
             <th scope="col"></th>
         </tr>
         </thead>
         <tbody id="table-body">
-        <tr>
-            <th>1</th>
-            <td class="image-name">Mark</td>
-            <td class="image-author">Otto</td>
-            <td class="view-count">345</td>
-            <td><span class="dropdown">
-                    <span class="dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Menü
-                    </span>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">Módosítás</a></li>
-                        <li><a class="dropdown-item" href="#">Törlés</a></li>
-                        <li><a class="dropdown-item" href="#">Megtekintés</a></li>
-                    </ul>
-                </span></td>
-        </tr>
+
         </tbody>
-    </table>
+    </table><br>
+    <h6>Hozzáadás/Módosítás</h6><br>
+    <form>
+        <div class="row mb-3">
+            <div class="col-auto">
+                <label for="author" class="form-label">Készítette:</label>
+                <input class="form-control" type="text" name="author" id="author">
+            </div>
+            <div class="col-lg">
+                <label for="name" class="form-label">Név:</label>
+                <input class="form-control" type="text" name="name" id="name">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>
 </body>
 </html>
