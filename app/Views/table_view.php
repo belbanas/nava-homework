@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"
             defer></script>
-    <script src="/static/js/script.js"></script>
+    <script src="/static/js/script.js" defer></script>
     <link href="/static/css/style.css" rel="stylesheet">
     <title>Fénykép adatbázis</title>
 </head>
@@ -36,7 +36,7 @@
         </tbody>
     </table><br>
     <h6>Hozzáadás/Módosítás</h6><br>
-    <form>
+<!--    <form>-->
         <div class="row mb-3">
             <div class="col-auto">
                 <label for="author" class="form-label">Készítette:</label>
@@ -47,8 +47,8 @@
                 <input class="form-control" type="text" name="name" id="name">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+        <button class="btn btn-primary" id="submit-btn">Submit</button>
+<!--    </form>-->
 </div>
 </body>
 </html>

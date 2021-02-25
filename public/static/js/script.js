@@ -1,12 +1,14 @@
 const DOM = {
     init: () => {
         DOM.fillTable();
+        DOM.submitBtnHandler();
     },
     fillTable: () => {
         fetch('/images')
             .then(response => response.json())
             .then(json_response => {
                 let tableBody = document.querySelector('#table-body');
+                tableBody.innerHTML = "";
                 for (let image of json_response.result) {
                     let viewCount = 0;
                     fetch('images/' + image.id + "/count")
@@ -53,6 +55,28 @@ const DOM = {
                 row.parentNode.removeChild(row);
             })
         }
+    },
+    submitBtnHandler: () => {
+        let submitBtn = document.getElementById("submit-btn");
+        submitBtn.addEventListener('click', () => {
+            let name = document.getElementById("name").value;
+            let author = document.getElementById("author").value;
+            fetch('/images', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    author: author
+                })
+            })
+                .then(response => response.json())
+                .then(json_resp => {
+                    console.log(json_resp)
+                    DOM.fillTable();
+                })
+        });
     }
 }
 
