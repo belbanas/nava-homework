@@ -44,15 +44,21 @@ class ViewCountController extends BaseController
                     "view_count" => 1
                 ]);
             } catch (Exception $e) {
-                return $e->getMessage();
+                return $this->response->setJSON([
+                    "Error" => $e->getMessage()
+                ]);
             }
         } else {
             try {
                 $this->viewCountModel->where('image_id', $id)->increment('view_count');
             } catch (Exception $e) {
-                return $e->getMessage();
+                return $this->response->setJSON([
+                    "Error" => $e->getMessage()
+                ]);
             }
         }
-        return null;
+        return $this->response->setJSON([
+            "message" => "OK"
+        ]);
     }
 }
