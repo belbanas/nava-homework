@@ -18,7 +18,7 @@ const DOM = {
                                 console.log(json_resp);
                             }
                             let HTML = "";
-                            HTML += `<tr>`
+                            HTML += `<tr id="${image.id}">`
                             HTML += `<th>${image.id}</th>`
                             HTML += `<td>${image.author}</td>`
                             HTML += `<td>${image.name}</td>`
@@ -29,15 +29,30 @@ const DOM = {
                                     </span>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                         <li><a class="dropdown-item" href="#">Módosítás</a></li>
-                                        <li><a class="dropdown-item" href="#">Törlés</a></li>
+                                        <li><span class="dropdown-item del-btn" data-id="${image.id}">Törlés</span></li>
                                         <li><a class="dropdown-item" href="/images/${image.id}">Megtekintés</a></li>
                                     </ul>
                                     </span></td>`
                             HTML += `</tr>`
                             tableBody.innerHTML += HTML;
                         })
+                        .then(DOM.deleteBtnHandler)
                 }
             })
+    },
+    deleteBtnHandler: () => {
+        let deleteBtns = document.querySelectorAll('.del-btn');
+        for (let btn of deleteBtns) {
+            btn.addEventListener('click', () => {
+                fetch('/images/' + btn.dataset.id, {
+                    method: 'DELETE'
+                })
+                    .then(response => response.json())
+                    .then(response => console.log(response))
+                let row = document.getElementById(btn.dataset.id);
+                row.parentNode.removeChild(row);
+            })
+        }
     }
 }
 
