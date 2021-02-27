@@ -14,7 +14,7 @@ An image metadata listing application with the basic CRUD features.
 1. Copy `env` to `.env` and tailor for your app, specifically the baseURL
 and any database settings.
 2. Run `composer install` for installing required dependencies.
-3. Setup your db using the 'db_init.sql' and 'db_dump.sql' files in this exact order.
+3. Setup your database using the 'db_init.sql' and 'db_dump.sql' files in this exact order.
 
 ## Running the application
 
