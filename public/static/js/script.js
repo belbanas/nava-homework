@@ -64,6 +64,36 @@ const DOM = {
             })
         }
     },
+    sendImage: (name, author) => {
+        fetch('/images', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                author: author
+            })
+        })
+            .then(response => response.json())
+            .then(json_resp => {
+                console.log(json_resp)
+                DOM.fillTable();
+            })
+    },
+    updateImage: (name, author) => {
+        fetch('/images/' + DOM.imageIdToUpdate, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                name: name,
+                author: author
+            })
+        })
+            .then(response => response.json())
+            .then(json => console.log(json))
+            .then(DOM.fillTable)
+    },
     updateBtnHandler: () => {
         let updateBtn = document.querySelector('#update-btn');
         updateBtn.addEventListener("click", () => {
@@ -72,35 +102,7 @@ const DOM = {
             if (name === "" || author === "") {
                 DOM.alertHandler();
             } else {
-                if (DOM.imageIdToUpdate === null) {
-                    fetch('/images', {
-                        method: 'POST',
-                        headers: {
-                            'content-type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            name: name,
-                            author: author
-                        })
-                    })
-                        .then(response => response.json())
-                        .then(json_resp => {
-                            console.log(json_resp)
-                            DOM.fillTable();
-                        })
-                } else {
-                    fetch('/images/' + DOM.imageIdToUpdate, {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json'},
-                        body: JSON.stringify({
-                            name: name,
-                            author: author
-                        })
-                    })
-                        .then(response => response.json())
-                        .then(json => console.log(json))
-                        .then(DOM.fillTable)
-                }
+                DOM.imageIdToUpdate === null ? DOM.sendImage(name, author) : DOM.updateImage(name, author);
             }
         })
     },
