@@ -21,7 +21,9 @@
     </nav>
     <h3>
         Fénykép ID: <?php echo $id; ?>
-    </h3>
+    </h3><br>
+    <p><strong>Készítette:</strong> <?php echo $author; ?></p>
+    <p><strong>Név:</strong> <?php echo $name; ?></p>
     <a href="/">Vissza</a>
 </div>
 </body>

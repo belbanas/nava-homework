@@ -87,6 +87,11 @@ class ImageController extends BaseController
     public function view($id)
     {
         (new ViewCountController)->incrementCounter($id);
-        return view('image_view', ["id" => $id]);
+        $image = $this->imageModel->where('id', $id)->first();
+        return view('image_view', [
+            "id" => $id,
+            "name" => $image->name,
+            "author" => $image->author,
+            ]);
     }
 }
