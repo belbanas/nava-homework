@@ -1,33 +1,26 @@
 const DOM = {
     init: () => {
         DOM.fillTable();
-        DOM.submitBtnHandler();
         DOM.updateBtnHandler();
     },
     fillTable: () => {
         DOM.imageIdToUpdate = null;
+        document.getElementById("name").value = null;
+        document.getElementById("author").value = null;
+        document.querySelector(".alert-place").innerHTML = "";
         fetch('/images')
             .then(response => response.json())
             .then(json_response => {
                 let tableBody = document.querySelector('#table-body');
                 tableBody.innerHTML = "";
+                let HTML = "";
                 for (let image of json_response.result) {
-                    let viewCount = 0;
-                    fetch('images/' + image.id + "/count")
-                        .then(resp => resp.json())
-                        .then(json_resp => {
-                            if (json_resp.view_count) {
-                                viewCount = json_resp.view_count
-                            } else {
-                                console.log(json_resp);
-                            }
-                            let HTML = "";
-                            HTML += `<tr id="${image.id}">`
-                            HTML += `<th>${image.id}</th>`
-                            HTML += `<td>${image.author}</td>`
-                            HTML += `<td>${image.name}</td>`
-                            HTML += `<td>${viewCount}</td>`
-                            HTML += `<td><span class="dropdown">
+                    HTML += `<tr id="${image.id}">`
+                    HTML += `<th>${image.id}</th>`
+                    HTML += `<td>${image.author}</td>`
+                    HTML += `<td>${image.name}</td>`
+                    HTML += `<td>${image.view_count}</td>`
+                    HTML += `<td><span class="dropdown">
                                     <span class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Menü
                                     </span>
@@ -37,12 +30,11 @@ const DOM = {
                                         <li><a class="dropdown-item" href="/images/${image.id}">Megtekintés</a></li>
                                     </ul>
                                     </span></td>`
-                            HTML += `</tr>`
-                            tableBody.innerHTML += HTML;
-                        })
-                        .then(DOM.deleteBtnHandler)
-                        .then(DOM.editBtnHandler)
+                    HTML += `</tr>`
                 }
+                tableBody.innerHTML = HTML;
+                DOM.deleteBtnHandler();
+                DOM.editBtnHandler();
             })
     },
     deleteBtnHandler: () => {
@@ -60,28 +52,6 @@ const DOM = {
         }
     },
     imageIdToUpdate: null,
-    submitBtnHandler: () => {
-        let submitBtn = document.getElementById("submit-btn");
-        submitBtn.addEventListener('click', () => {
-            let name = document.getElementById("name").value;
-            let author = document.getElementById("author").value;
-            fetch('/images', {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: name,
-                    author: author
-                })
-            })
-                .then(response => response.json())
-                .then(json_resp => {
-                    console.log(json_resp)
-                    DOM.fillTable();
-                })
-        });
-    },
     editBtnHandler: () => {
         let editBtns = document.querySelectorAll(".edit-btn");
         for (let editBtn of editBtns) {
@@ -94,27 +64,54 @@ const DOM = {
             })
         }
     },
+    sendImage: (name, author) => {
+        fetch('/images', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                author: author
+            })
+        })
+            .then(response => response.json())
+            .then(json_resp => {
+                console.log(json_resp)
+                DOM.fillTable();
+            })
+    },
+    updateImage: (name, author) => {
+        fetch('/images/' + DOM.imageIdToUpdate, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                name: name,
+                author: author
+            })
+        })
+            .then(response => response.json())
+            .then(json => console.log(json))
+            .then(DOM.fillTable)
+    },
     updateBtnHandler: () => {
         let updateBtn = document.querySelector('#update-btn');
         updateBtn.addEventListener("click", () => {
-            if (DOM.imageIdToUpdate === null) {
-                alert('Nincs mit módosítani')
+            let name = document.getElementById("name").value;
+            let author = document.getElementById("author").value;
+            if (name === "" || author === "") {
+                DOM.alertHandler();
             } else {
-                let name = document.getElementById("name").value;
-                let author = document.getElementById("author").value;
-                fetch('/images/' + DOM.imageIdToUpdate, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        name: name,
-                        author: author
-                    })
-                })
-                    .then(response => response.json())
-                    .then(json => console.log(json))
-                    .then(DOM.fillTable)
+                DOM.imageIdToUpdate === null ? DOM.sendImage(name, author) : DOM.updateImage(name, author);
             }
         })
+    },
+    alertHandler: () => {
+        let alert = document.querySelector(".alert-place");
+        alert.innerHTML = `<div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert">
+                <strong>Hiba! </strong>Kérlek mindkét mezőt töltsd ki!
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>`
     }
 }
 

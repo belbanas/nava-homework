@@ -38,6 +38,9 @@
     <h6>Hozzáadás/Módosítás</h6><br>
 <!--    <form>-->
         <div class="row mb-3">
+            <div class="alert-place">
+
+            </div>
             <div class="col-auto">
                 <label for="author" class="form-label">Készítette:</label>
                 <input class="form-control" type="text" name="author" id="author">
@@ -47,8 +50,7 @@
                 <input class="form-control" type="text" name="name" id="name">
             </div>
         </div>
-        <button class="btn btn-primary" id="submit-btn">Hozzáad</button>
-        <button class="btn btn-primary" id="update-btn">Módosít</button>
+        <button class="btn btn-primary" id="update-btn">Hozzáad/Módosít</button>
 <!--    </form>-->
 </div>
 </body>
