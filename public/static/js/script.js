@@ -109,7 +109,7 @@ const DOM = {
     alertHandler: () => {
         let alert = document.querySelector(".alert-place");
         alert.innerHTML = `<div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert">
-                <strong>Hiba!</strong>Kérlek mindkét mezőt töltsd ki!
+                <strong>Hiba! </strong>Kérlek mindkét mezőt töltsd ki!
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>`
     }
