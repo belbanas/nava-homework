@@ -6,28 +6,21 @@ const DOM = {
     },
     fillTable: () => {
         DOM.imageIdToUpdate = null;
+        document.getElementById("name").value = null;
+        document.getElementById("author").value = null;
         fetch('/images')
             .then(response => response.json())
             .then(json_response => {
                 let tableBody = document.querySelector('#table-body');
                 tableBody.innerHTML = "";
+                let HTML = "";
                 for (let image of json_response.result) {
-                    let viewCount = 0;
-                    fetch('images/' + image.id + "/count")
-                        .then(resp => resp.json())
-                        .then(json_resp => {
-                            if (json_resp.view_count) {
-                                viewCount = json_resp.view_count
-                            } else {
-                                console.log(json_resp);
-                            }
-                            let HTML = "";
-                            HTML += `<tr id="${image.id}">`
-                            HTML += `<th>${image.id}</th>`
-                            HTML += `<td>${image.author}</td>`
-                            HTML += `<td>${image.name}</td>`
-                            HTML += `<td>${viewCount}</td>`
-                            HTML += `<td><span class="dropdown">
+                    HTML += `<tr id="${image.id}">`
+                    HTML += `<th>${image.id}</th>`
+                    HTML += `<td>${image.author}</td>`
+                    HTML += `<td>${image.name}</td>`
+                    HTML += `<td>${image.view_count}</td>`
+                    HTML += `<td><span class="dropdown">
                                     <span class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Menü
                                     </span>
@@ -37,12 +30,11 @@ const DOM = {
                                         <li><a class="dropdown-item" href="/images/${image.id}">Megtekintés</a></li>
                                     </ul>
                                     </span></td>`
-                            HTML += `</tr>`
-                            tableBody.innerHTML += HTML;
-                        })
-                        .then(DOM.deleteBtnHandler)
-                        .then(DOM.editBtnHandler)
+                    HTML += `</tr>`
                 }
+                tableBody.innerHTML = HTML;
+                DOM.deleteBtnHandler();
+                DOM.editBtnHandler();
             })
     },
     deleteBtnHandler: () => {

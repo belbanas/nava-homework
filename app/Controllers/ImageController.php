@@ -20,8 +20,17 @@ class ImageController extends BaseController
     public function index()
     {
         $images = $this->imageModel->findAll();
+        $result = [];
+        foreach ($images as $image) {
+            array_push($result, [
+                "id" => $image->id,
+                "name" => $image->name,
+                "author" => $image->author,
+                "view_count" => (new ViewCountController)->index($image->id)
+            ]);
+        }
         return $this->response->setJSON([
-            "result" => $images
+            "result" => $result
         ])->setStatusCode(200);
     }
 
@@ -77,7 +86,7 @@ class ImageController extends BaseController
 
     public function view($id)
     {
-        $response = (new ViewCountController)->incrementCounter($id);
+        (new ViewCountController)->incrementCounter($id);
         return view('image_view', ["id" => $id]);
     }
 }
