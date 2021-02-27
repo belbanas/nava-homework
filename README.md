@@ -9,7 +9,7 @@ An image metadata listing application with the basic CRUD features.
 ## Technologies
 
 - Backend: CodeIgniter, MySQL.
-- Frontend: CodeIgniter, HTML5, CSS, Vanilla JS with AJAX.
+- Frontend: CodeIgniter, HTML5, CSS, Vanilla JS with AJAX, Bootstrap.
 
 ## Setup
 
