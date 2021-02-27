@@ -38,6 +38,9 @@
     <h6>Hozzáadás/Módosítás</h6><br>
 <!--    <form>-->
         <div class="row mb-3">
+            <div class="alert-place">
+
+            </div>
             <div class="col-auto">
                 <label for="author" class="form-label">Készítette:</label>
                 <input class="form-control" type="text" name="author" id="author">

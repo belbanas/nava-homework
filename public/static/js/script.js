@@ -7,6 +7,7 @@ const DOM = {
         DOM.imageIdToUpdate = null;
         document.getElementById("name").value = null;
         document.getElementById("author").value = null;
+        document.querySelector(".alert-place").innerHTML = "";
         fetch('/images')
             .then(response => response.json())
             .then(json_response => {
@@ -68,36 +69,47 @@ const DOM = {
         updateBtn.addEventListener("click", () => {
             let name = document.getElementById("name").value;
             let author = document.getElementById("author").value;
-            if (DOM.imageIdToUpdate === null) {
-                fetch('/images', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        name: name,
-                        author: author
-                    })
-                })
-                    .then(response => response.json())
-                    .then(json_resp => {
-                        console.log(json_resp)
-                        DOM.fillTable();
-                    })
+            if (name === "" || author === "") {
+                DOM.alertHandler();
             } else {
-                fetch('/images/' + DOM.imageIdToUpdate, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        name: name,
-                        author: author
+                if (DOM.imageIdToUpdate === null) {
+                    fetch('/images', {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: name,
+                            author: author
+                        })
                     })
-                })
-                    .then(response => response.json())
-                    .then(json => console.log(json))
-                    .then(DOM.fillTable)
+                        .then(response => response.json())
+                        .then(json_resp => {
+                            console.log(json_resp)
+                            DOM.fillTable();
+                        })
+                } else {
+                    fetch('/images/' + DOM.imageIdToUpdate, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            name: name,
+                            author: author
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(json => console.log(json))
+                        .then(DOM.fillTable)
+                }
             }
         })
+    },
+    alertHandler: () => {
+        let alert = document.querySelector(".alert-place");
+        alert.innerHTML = `<div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert">
+                <strong>Hiba!</strong>Kérlek mindkét mezőt töltsd ki!
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>`
     }
 }
 
