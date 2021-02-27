@@ -1,5 +1,7 @@
 # NAVA Homework
 
+Author: Benkő Dániel
+
 ## Image viewer application
 
 An image metadata listing application with the basic CRUD features.

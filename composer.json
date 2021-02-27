@@ -1,9 +1,13 @@
 {
-	"name": "codeigniter4/appstarter",
+	"name": "NAVA homework",
 	"type": "project",
-	"description": "CodeIgniter4 starter app",
+	"description": "Image metadata viewer",
 	"homepage": "https://codeigniter.com",
 	"license": "MIT",
+	"authors": {
+		"name": "Daniel Benko",
+		"email": "belbanas@gmail.com"
+	},
 	"require": {
 		"php": "^7.3||^8.0",
 		"codeigniter4/framework": "^4"
