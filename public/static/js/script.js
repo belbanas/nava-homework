@@ -1,7 +1,6 @@
 const DOM = {
     init: () => {
         DOM.fillTable();
-        DOM.submitBtnHandler();
         DOM.updateBtnHandler();
     },
     fillTable: () => {
@@ -52,28 +51,6 @@ const DOM = {
         }
     },
     imageIdToUpdate: null,
-    submitBtnHandler: () => {
-        let submitBtn = document.getElementById("submit-btn");
-        submitBtn.addEventListener('click', () => {
-            let name = document.getElementById("name").value;
-            let author = document.getElementById("author").value;
-            fetch('/images', {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: name,
-                    author: author
-                })
-            })
-                .then(response => response.json())
-                .then(json_resp => {
-                    console.log(json_resp)
-                    DOM.fillTable();
-                })
-        });
-    },
     editBtnHandler: () => {
         let editBtns = document.querySelectorAll(".edit-btn");
         for (let editBtn of editBtns) {
@@ -89,11 +66,25 @@ const DOM = {
     updateBtnHandler: () => {
         let updateBtn = document.querySelector('#update-btn');
         updateBtn.addEventListener("click", () => {
+            let name = document.getElementById("name").value;
+            let author = document.getElementById("author").value;
             if (DOM.imageIdToUpdate === null) {
-                alert('Nincs mit módosítani')
+                fetch('/images', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        author: author
+                    })
+                })
+                    .then(response => response.json())
+                    .then(json_resp => {
+                        console.log(json_resp)
+                        DOM.fillTable();
+                    })
             } else {
-                let name = document.getElementById("name").value;
-                let author = document.getElementById("author").value;
                 fetch('/images/' + DOM.imageIdToUpdate, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json'},
